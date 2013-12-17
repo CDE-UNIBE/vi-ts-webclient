@@ -1,0 +1,12 @@
+tmp/
+
+Config/core.php
+Config/database.php
+Config/email.php
+
+webroot/index.php
+webroot/js/bootstrap-3.0.3/
+webroot/js/leaflet-0.6.4/
+webroot/js/jquery-1.10.2.min.js
+webroot/css/bootstrap-3.0.3/
+webroot/css/leaflet-0.6.4/

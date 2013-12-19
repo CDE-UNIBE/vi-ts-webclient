@@ -1,10 +1,9 @@
 <?php
 echo $this->Html->script("leaflet-0.6.4/leaflet.js", array('inline' => false));
+echo $this->Html->css("leaflet-0.6.4/leaflet.css", array('inline' => false));
 ?>
-<h1>NDVI Time Series</h1>
-Zis is it!
 
-<div id="map" style="height: 400px; margin-bottom: 20px;">
+<div id="map" style="height: 400px; margin-bottom: 20px; margin-top: 20px;">
 
 </div>
 <div class="panel panel-default">

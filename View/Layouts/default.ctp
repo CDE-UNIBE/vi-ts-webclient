@@ -11,14 +11,15 @@
     echo $this->Html->meta('icon');
     echo $this->fetch('css');
     echo $this->fetch('script');
-    echo $this->Html->script(array("jquery-1.10.2.min.js","bootstrap-3.0.3/js/bootstrap.min.js"));
+    echo $this->Html->script(array("jquery-1.10.2.min.js","bootstrap-3.0.3/bootstrap.min.js"));
     ?>
 
     <title>NDVI Time Series based on MODIS</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="http://localhost/devel/ndvi-time-series/app/webroot/css/bootstrap-3.0.3/bootstrap.css" rel="stylesheet">
-    <link rel="stylesheet" href="http://localhost/devel/ndvi-time-series/app/webroot/js/leaflet-0.6.4/leaflet.css" />
+    <?php
+    echo $this->Html->css("bootstrap-3.0.3/bootstrap.css");
+    ?>
     <!-- Custom styles for this template -->
     <!--<link href="navbar-static-top.css" rel="stylesheet">-->
 
@@ -54,7 +55,7 @@
             <span class="icon-bar"></span>
           </button>
           <a class="logo navbar-btn pull-left" href="<?php echo $this->Html->url(array("controller" => "pages", "action" => "display", "index"));?>" title="Home">
-        <img src="http://localhost/devel/ndvi-time-series/app/webroot/img/modis-satellite.png" alt="Home" />
+        <?php echo $this->Html->image("modis-satellite.png", array('alt' => "Home"))?>
       </a>
           <a class="navbar-brand" href="<?php echo $this->Html->url(array("controller" => "pages", "action" => "display", "index"));?>">NDVI Time Series</a>
         </div>

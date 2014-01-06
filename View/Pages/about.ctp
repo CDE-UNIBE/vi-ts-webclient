@@ -4,4 +4,4 @@
 </div>
 
 <h1>About the project</h1>
-Zis is it!
+Zis is it! and more

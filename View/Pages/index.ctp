@@ -6,7 +6,27 @@ echo $this->Html->css("leaflet-0.6.4/leaflet.css", array('inline' => false));
 <div id="map" style="height: 400px; margin-bottom: 20px; margin-top: 20px;">
 
 </div>
-<div class="panel panel-default">
+
+<div id="diagram-preview-container">
+    <div id="raw-values-preview-div" class="panel panel-default" style="display: none;">
+    </div>
+</div>
+
+<div class="btn-group">
+    <div class="btn-group">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+            Dropdown
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+            <li><a href="#">Dropdown link</a></li>
+            <li><a href="#">Dropdown link</a></li>
+        </ul>
+    </div>
+    <button id="add-diagram-button" type="button" class="btn btn-default">Add Diagram</button>
+</div>
+
+<!--div class="panel panel-default">
     <div class="panel-body">
         <div>Get values as comma-separated values (csv)</div>
         <div class="btn-group" data-toggle="buttons">
@@ -25,6 +45,9 @@ echo $this->Html->css("leaflet-0.6.4/leaflet.css", array('inline' => false));
         </div>
     </div>
 </div>
+
+
+
 <div class="panel panel-default">
     <div class="panel-body">
         <div>Get diagrams</div>
@@ -43,7 +66,7 @@ echo $this->Html->css("leaflet-0.6.4/leaflet.css", array('inline' => false));
             <button type="button" class="btn btn-default" id="preview-bfast-button">Preview</button>
         </div>
         <div id="preview-bfast-div" style="display: none;">
-            <?php echo $this->Html->image('seasonalbreak_TreeMort.jpg', array('width' => '100%', 'alt' => 'BFast')); ?>
+<?php echo $this->Html->image('seasonalbreak_TreeMort.jpg', array('width' => '100%', 'alt' => 'BFast')); ?>
             <div class="btn-group">
                 <button type="button" class="btn btn-default" id="download-bfast-button">Download</button>
             </div>
@@ -80,10 +103,10 @@ echo $this->Html->css("leaflet-0.6.4/leaflet.css", array('inline' => false));
             <div id="latlng-alert-body" class="modal-body">
                 <p>One fine body&hellip;</p>
             </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+        </div>
+    </div>
+</div> /.modal -->
 <?php
-            $date = date_create();
-            echo $this->Html->script("map.js?_dc=" . date_timestamp_get($date));
+$date = date_create();
+echo $this->Html->script("map.js?_dc=" . date_timestamp_get($date));
 ?>

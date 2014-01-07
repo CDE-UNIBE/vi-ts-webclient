@@ -7,6 +7,18 @@ echo $this->Html->css("leaflet-0.6.4/leaflet.css", array('inline' => false));
 
 </div>
 
+<form class="form-inline" role="form" style="margin-bottom: 20px;">
+  <div class="form-group">
+    <label class="sr-only" for="longitude-input">Longitude</label>
+    <input type="number" class="form-control" id="longitude-input" placeholder="Longitude">
+  </div>
+  <div class="form-group">
+    <label class="sr-only" for="latitude-input">Latitude</label>
+    <input type="number" class="form-control" id="latitude-input" placeholder="Latitude">
+  </div>
+  <button type="button" id="location-input-button" class="btn btn-default">Set location</button>
+</form>
+
 <div id="diagram-preview-container">
     <div id="raw-values-preview-div" class="panel panel-default" style="display: none;">
     </div>
@@ -66,7 +78,6 @@ echo $this->Html->css("leaflet-0.6.4/leaflet.css", array('inline' => false));
             <button type="button" class="btn btn-default" id="preview-bfast-button">Preview</button>
         </div>
         <div id="preview-bfast-div" style="display: none;">
-<?php echo $this->Html->image('seasonalbreak_TreeMort.jpg', array('width' => '100%', 'alt' => 'BFast')); ?>
             <div class="btn-group">
                 <button type="button" class="btn btn-default" id="download-bfast-button">Download</button>
             </div>

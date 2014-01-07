@@ -24,11 +24,20 @@ var setLocation = function(lon, lat){
     marker.addTo(map);
 }
 
-var map = L.map('map').setView([46.5, 8], 8);
-L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+var map = L.map('map').setView([0, 0], 6);
+var baselayer = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>',
     maxZoom: 17
-}).addTo(map);
+});
+baselayer.addTo(map)
+
+var modis_tiles = L.tileLayer('http://www.vi-ts.org/tms/1.0.0/modis_tiles/{z}/{x}/{y}.png', {
+    tms: true,
+    maxZoom: 17
+});
+modis_tiles.addTo(map)
+
+L.control.layers({"Base Layer": baselayer},{"Available tiles": modis_tiles}).addTo(map);
 
 map.on('click', function(e) {
     var lat = e.latlng.lat;

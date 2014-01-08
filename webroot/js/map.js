@@ -24,7 +24,7 @@ var setLocation = function(lon, lat){
     marker.addTo(map);
 }
 
-var map = L.map('map').setView([0, 0], 6);
+var map = L.map('map').setView([0, 0], 2);
 var baselayer = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>',
     maxZoom: 17

@@ -1,6 +1,39 @@
 <?php
 echo $this->Html->script("leaflet-0.6.4/leaflet.js", array('inline' => false));
 echo $this->Html->css("leaflet-0.6.4/leaflet.css", array('inline' => false));
+
+// Read the URL parameters and set corresponding initial map coordinates and
+// zoom and marker if requested
+$lat = 0;
+$lon = 0;
+$zoom = 2;
+if(isset($_GET['lat'])){
+    $lat = $_GET['lat'];
+}
+if(isset($_GET['lon'])){
+    $lon = $_GET['lon'];
+}
+if(isset($_GET['zoom'])){
+    $zoom = $_GET['zoom'];
+}
+if(isset($_GET['mlat'])){
+    $mlat = $_GET['mlat'];
+}
+if(isset($_GET['mlon'])){
+    $mlon = $_GET['mlon'];
+}
+
+$script = "
+var initLat = $lat, initLon = $lon, initZoom = $zoom;";
+
+if(isset($mlon) && isset ($mlat)) {
+    $script .= "var initMarkerLat = $mlat, initMarkerLon = $mlon;
+";
+}
+
+
+echo $this->Html->scriptBlock($script, array('inline' => false));
+
 ?>
 
 <div id="map" style="height: 400px; margin-bottom: 20px; margin-top: 20px;">
@@ -17,6 +50,7 @@ echo $this->Html->css("leaflet-0.6.4/leaflet.css", array('inline' => false));
     <input type="number" class="form-control" id="latitude-input" placeholder="Latitude">
   </div>
   <button type="button" id="location-input-button" class="btn btn-default">Set location</button>
+  <button type="button" id="permalink-input-button" class="btn btn-default">Permanent link</button>
 </form>
 
 <div id="diagram-preview-container">

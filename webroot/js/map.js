@@ -7,9 +7,6 @@ var setLocation = function(lon, lat){
         map.removeLayer(marker);
     }
     var innerHtml = "<div class=\"panel-heading\">Raw Values</div><div><img width=\"100%\" src=\"/cgi-bin/zoo_loader.cgi?ServiceProvider=&metapath=&Service=WPS&Request=Execute&Version=1.0.0&Identifier=ModisTimeSeries&DataInputs=lon=" + lon + ";lat=" + lat + ";epsg=4326;width=800;height=300&RawDataOutput=timeseries@mimeType=image/png\" alt=\"WPS Result\"></img></div>"
-    $("#latlng-alert-body").html(innerHtml);
-    var header = "<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\">&times;</button>";
-    header += "<h4>Time serie for latitude " + lat + " longitude " + lon + "</h4>";
     //$("#latlng-alert-header").html(header);
     //$("#latlng-alert").modal();
     $("#raw-values-preview-div").html(innerHtml);
@@ -24,7 +21,7 @@ var setLocation = function(lon, lat){
     marker.addTo(map);
 }
 
-var map = L.map('map').setView([0, 0], 2);
+var map = L.map('map').setView([initLat, initLon], initZoom);
 var baselayer = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>',
     maxZoom: 17
@@ -42,7 +39,21 @@ var globcover_2009 = L.tileLayer('http://www.vi-ts.org/tms/1.0.0/globcover_2009/
     maxZoom: 17
 });
 
-L.control.layers({"Base Layer": baselayer},{"Global landcover": globcover_2009, "Available countries": modis_tiles}).addTo(map);
+L.control.layers({
+    "Base Layer": baselayer
+},{
+    "Global landcover": globcover_2009,
+    "Available countries": modis_tiles
+}).addTo(map);
+
+// Check if an inital marker is set. If yes, set the marker and fill in the
+// coordinates input fields
+if(typeof initMarkerLat != 'undefined' && typeof initMarkerLon != 'undefined'){
+    setLocation(initMarkerLon, initMarkerLat);
+    // Update also the input fields
+    $("#longitude-input").val(initMarkerLon);
+    $("#latitude-input").val(initMarkerLat);
+}
 
 map.on('click', function(e) {
     var lat = e.latlng.lat;
@@ -78,6 +89,18 @@ $("#location-input-button").click(function(e){
     var lon = $("#longitude-input").val();
     var lat = $("#latitude-input").val();
     setLocation(lon, lat);
-    map.panTo(L.latLng(lat, lon), {animate: true});
+    map.panTo(L.latLng(lat, lon), {
+        animate: true
+    });
 });
 
+$("#permalink-input-button").click(function(e){
+    var zoom = map.getZoom();
+    var center = map.getCenter();
+    var url = "?zoom=" + zoom + "&lat=" + center.lat + "&lon=" + center.lng;
+    if(marker){
+        var m = marker.getLatLng();
+        url += "&mlat=" + m.lat + "&mlon=" + m.lng;
+    }
+    document.location.href = url;
+});

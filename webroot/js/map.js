@@ -30,7 +30,8 @@ baselayer.addTo(map);
 
 var modis_tiles = L.tileLayer('http://www.vi-ts.org/tms/1.0.0/modis_tiles/{z}/{x}/{y}.png', {
     tms: true,
-    maxZoom: 17
+    maxZoom: 17,
+    opacity: 0.6
 });
 modis_tiles.addTo(map);
 

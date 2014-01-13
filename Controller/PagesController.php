@@ -19,6 +19,8 @@
  */
 App::uses('AppController', 'Controller');
 
+include 'geohash.class.php';
+
 /**
  * Static content controller
  *
@@ -73,5 +75,22 @@ class PagesController extends AppController {
 			}
 			throw new NotFoundException();
 		}
+	}
+	
+	public function location() {
+
+	    $location = $this->request->params['location'];
+
+        $geohash = new Geohash();
+        $coords = $geohash->decode($location);
+
+        // Read the URL parameters and
+        // set corresponding initial map coordinates and
+        // zoom and marker if requested
+        $this->set("mlat", $coords[0]);
+        $this->set("mlon", $coords[1]);
+
+	    $this->render('index');
+
 	}
 }

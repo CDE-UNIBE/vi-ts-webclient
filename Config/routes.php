@@ -24,13 +24,26 @@
  * its action called 'display', and we pass a param to select the view file
  * to use (in this case, /app/View/Pages/home.ctp)...
  */
-	Router::connect('/', array('controller' => 'pages', 'action' => 'display', 'index'));
+	Router::connect('/', array('controller' => 'pages',
+	                           'action' => 'display',
+	                           'index'));
 /**
  * ...and connect the rest of 'Pages' controller's URLs.
  */
-	Router::connect('/pages/*', array('controller' => 'pages', 'action' => 'display'));
-	
-    Router::connect('/wps/*', array('controller' => 'wps', 'action' => 'display'));
+
+    Router::connect('/about', array('controller' => 'pages',
+                                    'action' => 'display',
+                                    'about'));
+    
+    Router::connect('/contact', array('controller' => 'pages',
+                                      'action' => 'display',
+                                      'contact'));
+    
+    Router::connect('/:location', array('controller' => 'pages',
+                                        'action' => 'location'),
+                                  array('location' => '[a-z0-9]+'));
+    
+#    Router::connect('/pages/*', array('controller' => 'pages', 'action' => 'display'));
 
 /**
  * Load all plugin routes. See the CakePlugin documentation on
@@ -42,4 +55,4 @@
  * Load the CakePHP default routes. Only remove this if you do not want to use
  * the built-in default routes.
  */
-	require CAKE . 'Config' . DS . 'routes.php';
+#    require CAKE . 'Config' . DS . 'routes.php';

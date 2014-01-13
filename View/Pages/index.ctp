@@ -1,6 +1,8 @@
 <?php
+echo $this->Html->meta("viewport", "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no");
 echo $this->Html->script("leaflet-0.6.4/leaflet.js", array('inline' => false));
 echo $this->Html->css("leaflet-0.6.4/leaflet.css", array('inline' => false));
+echo $this->Html->css("index.css", array('inline' => false));
 
 if(isset($mlat) && isset($mlon)){
     $script = "var mlat = $mlat, mlon = $mlon;";
@@ -23,7 +25,7 @@ if(isset($mlat) && isset($mlon)){
     <input type="number" class="form-control" id="latitude-input" placeholder="Latitude">
   </div>
   <button type="button" id="location-input-button" class="btn btn-default">Set location</button>
-  <button type="button" id="permalink-input-button" class="btn btn-default">Permanent link</button>
+  <!--button type="button" id="permalink-input-button" class="btn btn-default">Permanent link</button-->
 </form>
 
 <div id="diagram-preview-container">
@@ -47,5 +49,10 @@ if(isset($mlat) && isset($mlon)){
 
 <?php
 $date = date_create();
-echo $this->Html->script("map.js?_dc=" . date_timestamp_get($date));
+if(Configure::read("debug") == 0){
+    echo $this->Html->script("map.js?_dc=" . date_timestamp_get($date));
+} else {
+    echo $this->Html->script("map-debug.js?_dc=" . date_timestamp_get($date));
+}
+
 ?>

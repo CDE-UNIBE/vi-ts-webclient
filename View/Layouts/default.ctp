@@ -70,7 +70,7 @@
     </div>
 
 
-    <div class="container">
+    <div class="container" style="margin-top: 20px;">
       <!-- Main component for a primary marketing message or call to action -->
         <?php echo $this->fetch('content'); ?>
     </div><!-- /container -->

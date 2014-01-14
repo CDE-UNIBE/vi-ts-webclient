@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Routes configuration
  *
@@ -24,32 +25,38 @@
  * its action called 'display', and we pass a param to select the view file
  * to use (in this case, /app/View/Pages/home.ctp)...
  */
-	Router::connect('/', array('controller' => 'pages',
-	                           'action' => 'display',
-	                           'index'));
+Router::connect('/', array('controller' => 'pages',
+            'action' => 'display',
+            'index'));
 /**
  * ...and connect the rest of 'Pages' controller's URLs.
  */
 
-    Router::connect('/about', array('controller' => 'pages',
-                                    'action' => 'display',
-                                    'about'));
-    
-    Router::connect('/contact', array('controller' => 'pages',
-                                      'action' => 'display',
-                                      'contact'));
-    
-    Router::connect('/:location', array('controller' => 'pages',
-                                        'action' => 'location'),
-                                  array('location' => '[a-z0-9]+'));
-    
+Router::connect('/about', array('controller' => 'pages',
+            'action' => 'display',
+            'about'));
+
+Router::connect('/MODIS/processed/*', array('controller' => 'directories',
+            'action' => 'processed'));
+
+Router::connect('/MODIS/MOLT/*', array('controller' => 'directories',
+            'action' => 'molt'));
+
+Router::connect('/contact', array('controller' => 'pages',
+            'action' => 'display',
+            'contact'));
+
+Router::connect('/:location', array('controller' => 'pages',
+            'action' => 'location'),
+                array('location' => '[a-z0-9]+'));
+
 #    Router::connect('/pages/*', array('controller' => 'pages', 'action' => 'display'));
 
 /**
  * Load all plugin routes. See the CakePlugin documentation on
  * how to customize the loading of plugin routes.
  */
-	CakePlugin::routes();
+CakePlugin::routes();
 
 /**
  * Load the CakePHP default routes. Only remove this if you do not want to use

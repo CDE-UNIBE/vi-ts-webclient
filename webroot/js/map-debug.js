@@ -3,7 +3,7 @@ $(".alert").alert()
 var marker;
 
 var showAlert = function(msg){
-    var html = "<div id=\"alert-div\" class=\"alert alert-warning alert-dismissable\" style=\"margin-top: 20px;\">";
+    var html = "<div id=\"alert-div\" class=\"alert alert-warning alert-dismissable\">";
     html += "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">&times;</button>";
     html += msg;
     html += "</div>";
@@ -61,6 +61,11 @@ var modis_tiles = L.tileLayer('http://www.vi-ts.org/tms/1.0.0/modis_tiles/{z}/{x
 modis_tiles.addTo(map);
 
 var globcover_2009 = L.tileLayer('http://www.vi-ts.org/tms/1.0.0/globcover_2009/{z}/{x}/{y}.png', {
+    tms: true,
+    maxZoom: 17
+});
+
+var heatmap = L.tileLayer('http://www.vi-ts.org/tms/1.0.0/access_heatmap/{z}/{x}/{y}.png', {
     tms: true,
     maxZoom: 17
 });
@@ -146,7 +151,8 @@ L.control.layers({
     "Base Layer": baselayer
 },{
     "Global landcover": globcover_2009,
-    "Available countries": modis_tiles
+    "Available countries": modis_tiles,
+    "Requested locatiosn": heatmap
 }).addTo(map);
 
 // Check if an inital marker is set. If yes, set the marker and fill in the

@@ -14,6 +14,49 @@ var setLocation = function(lon, lat){
     if(map.hasLayer(marker)){
         map.removeLayer(marker);
     }
+
+
+    var innerHtml = "<div class=\"panel-heading\">Data are being processed ...</div><div style=\"text-align: center;\"><img width=\"200\" height=\"200\" src=\"img/spinner.gif\" alt=\"Loading ...\"></img></div>"
+    $("#raw-values-preview-div").html(innerHtml);
+    
+    $("#raw-values-preview-div").fadeIn();
+    // Update also the input fields
+    $("#longitude-input").val(lon);
+    $("#latitude-input").val(lat);
+    marker = L.marker(L.latLng(lat, lon));
+    marker.on('click', function(e){
+        map.removeLayer(marker);
+        $("#raw-values-preview-div").html("");
+        $("#raw-values-preview-div").fadeOut();
+        $("#longitude-input").val("");
+        $("#latitude-input").val("");
+        marker = undefined;
+    });
+    marker.addTo(map);
+
+    /*http://localhost/cgi-bin/zoo_loader.cgi?ServiceProvider=&metapath=&Service=WPS&Request=Execute&Version=1.0.0&
+//Identifier=ModisTimeSeries&DataInputs=lon=-11.1676025390625;lat=6.980954426458497;epsg=4326;width=800;height=300&
+//RawDataOutput=timeseries@mimeType=application/json*/
+
+    $.ajax({
+        url: "/cgi-bin/zoo_loader.cgi?RawDataOutput=timeseries@mimeType=image/png",
+        data: {
+            "ServiceProvider": "",
+            "metapath": "",
+            Service: "WPS",
+            Request: "Execute",
+            Version: "1.0.0",
+            Identifier: "ModisTimeSeries",
+            DataInputs: "lon=" + lon + ";lat=" + lat + ";epsg=4326;width=800;height=300"
+        },
+        success: function(res, textStatus, jqXHR){
+            data = $.parseJSON(res);
+            var innerHtml = "<div class=\"panel-heading\">Time Series</div><div><img width=\"100%\" src=\"" + data['file'] + "\" alt=\"WPS Result\"></img></div>"
+            $("#raw-values-preview-div").html(innerHtml);
+        }
+    });
+
+/*
     var innerHtml = "<div class=\"panel-heading\">Raw Values</div><div><img width=\"100%\" src=\"/cgi-bin/zoo_loader.cgi?ServiceProvider=&metapath=&Service=WPS&Request=Execute&Version=1.0.0&Identifier=ModisTimeSeries&DataInputs=lon=" + lon + ";lat=" + lat + ";epsg=4326;width=800;height=300&RawDataOutput=timeseries@mimeType=image/png\" alt=\"WPS Result\"></img></div>"
     //$("#latlng-alert-header").html(header);
     //$("#latlng-alert").modal();
@@ -32,6 +75,7 @@ var setLocation = function(lon, lat){
         marker = undefined;
     });
     marker.addTo(map);
+    */
 }
 
 var mapOnClick = function(event){
@@ -152,7 +196,7 @@ L.control.layers({
 },{
     "Global landcover": globcover_2009,
     "Available countries": modis_tiles,
-    "Requested locatiosn": heatmap
+    "Requested locations": heatmap
 }).addTo(map);
 
 // Check if an inital marker is set. If yes, set the marker and fill in the

@@ -33,20 +33,6 @@ if(isset($mlat) && isset($mlon)){
     </div>
 </div>
 
-<div class="btn-group">
-    <div class="btn-group">
-        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-            Dropdown
-            <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu">
-            <li><a href="#">Dropdown link</a></li>
-            <li><a href="#">Dropdown link</a></li>
-        </ul>
-    </div>
-    <button id="add-diagram-button" type="button" class="btn btn-default">Add Diagram</button>
-</div>
-
 <?php
 $date = date_create();
 if(Configure::read("debug") == 0){

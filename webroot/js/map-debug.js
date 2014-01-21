@@ -15,14 +15,13 @@ var setLocation = function(lon, lat){
         map.removeLayer(marker);
     }
 
-
     var innerHtml = "<div class=\"panel-heading\">Data are being processed ...</div><div style=\"text-align: center;\"><img width=\"200\" height=\"200\" src=\"img/spinner.gif\" alt=\"Loading ...\"></img></div>"
     $("#raw-values-preview-div").html(innerHtml);
     
     $("#raw-values-preview-div").fadeIn();
     // Update also the input fields
-    $("#longitude-input").val(lon);
-    $("#latitude-input").val(lat);
+    $("#longitude-input").val(Math.round(lon*10000)/10000);
+    $("#latitude-input").val(Math.round(lat*10000)/10000);
     marker = L.marker(L.latLng(lat, lon));
     marker.on('click', function(e){
         map.removeLayer(marker);
@@ -39,7 +38,7 @@ var setLocation = function(lon, lat){
 //RawDataOutput=timeseries@mimeType=application/json*/
 
     $.ajax({
-        url: "/cgi-bin/zoo_loader.cgi?RawDataOutput=timeseries@mimeType=image/png",
+        url: "/cgi-bin/zoo_loader.cgi?RawDataOutput=timeseries@mimeType=application/json",
         data: {
             "ServiceProvider": "",
             "metapath": "",

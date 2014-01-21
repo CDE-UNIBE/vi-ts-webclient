@@ -48,8 +48,7 @@ var setLocation = function(lon, lat){
             Identifier: "ModisTimeSeries",
             DataInputs: "lon=" + lon + ";lat=" + lat + ";epsg=4326;width=800;height=300"
         },
-        success: function(res, textStatus, jqXHR){
-            data = $.parseJSON(res);
+        success: function(data, textStatus, jqXHR){
             var innerHtml = "<div class=\"panel-heading\">Time Series</div><div><img width=\"100%\" src=\"" + data['file'] + "\" alt=\"WPS Result\"></img></div>"
             $("#raw-values-preview-div").html(innerHtml);
         }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Static content controller.
  *
@@ -31,55 +32,55 @@ include 'geohash.class.php';
  */
 class PagesController extends AppController {
 
-/**
- * This controller does not use a model
- *
- * @var array
- */
-	public $uses = array();
+    /**
+     * This controller does not use a model
+     *
+     * @var array
+     */
+    public $uses = array();
 
-/**
- * Displays a view
- *
- * @param mixed What page to display
- * @return void
- * @throws NotFoundException When the view file could not be found
- *	or MissingViewException in debug mode.
- */
-	public function display() {
-		$path = func_get_args();
+    /**
+     * Displays a view
+     *
+     * @param mixed What page to display
+     * @return void
+     * @throws NotFoundException When the view file could not be found
+     * 	or MissingViewException in debug mode.
+     */
+    public function display() {
+        $path = func_get_args();
 
-		$count = count($path);
-		if (!$count) {
-			return $this->redirect('/');
-		}
-		$page = $subpage = $title_for_layout = null;
+        $count = count($path);
+        if (!$count) {
+            return $this->redirect('/');
+        }
+        $page = $subpage = $title_for_layout = null;
 
-		if (!empty($path[0])) {
-			$page = $path[0];
-		}
-		if (!empty($path[1])) {
-			$subpage = $path[1];
-		}
-		if (!empty($path[$count - 1])) {
-			//$title_for_layout = Inflector::humanize($path[$count - 1]);
-			$title_for_layout = $path[$count - 1];
-		}
-		$this->set(compact('page', 'subpage', 'title_for_layout'));
+        if (!empty($path[0])) {
+            $page = $path[0];
+        }
+        if (!empty($path[1])) {
+            $subpage = $path[1];
+        }
+        if (!empty($path[$count - 1])) {
+            //$title_for_layout = Inflector::humanize($path[$count - 1]);
+            $title_for_layout = $path[$count - 1];
+        }
+        $this->set(compact('page', 'subpage', 'title_for_layout'));
 
-		try {
-			$this->render(implode('/', $path));
-		} catch (MissingViewException $e) {
-			if (Configure::read('debug')) {
-				throw $e;
-			}
-			throw new NotFoundException();
-		}
-	}
-	
-	public function location() {
+        try {
+            $this->render(implode('/', $path));
+        } catch (MissingViewException $e) {
+            if (Configure::read('debug')) {
+                throw $e;
+            }
+            throw new NotFoundException();
+        }
+    }
 
-	    $location = $this->request->params['location'];
+    public function location() {
+
+        $location = $this->request->params['location'];
 
         $geohash = new Geohash();
         $coords = $geohash->decode($location);
@@ -90,7 +91,52 @@ class PagesController extends AppController {
         $this->set("mlat", $coords[0]);
         $this->set("mlon", $coords[1]);
 
-	    $this->render('index');
+        $this->render('index');
+    }
 
-	}
+    public function country($id) {
+
+        switch ($id) {
+            case "switzerland":
+                $this->set("lat", 46.83);
+                $this->set("lon", 8.29);
+                $this->set("zoom", 7);
+                break;
+
+            case "liberia":
+                $this->set("lat", 6.51);
+                $this->set("lon", -9.37);
+                $this->set("zoom", 7);
+                break;
+
+            case "ethiopia":
+                $this->set("lat", 8.49);
+                $this->set("lon", 39.58);
+                $this->set("zoom", 5);
+                break;
+
+            case "kenya":
+                $this->set("lat", 0.61);
+                $this->set("lon", 37.95);
+                $this->set("zoom", 6);
+                break;
+
+            case "tanzania":
+                $this->set("lat", -6.09);
+                $this->set("lon", 35.11);
+                $this->set("zoom", 5);
+                break;
+
+            case "laos":
+                $this->set("lat", 18.38);
+                $this->set("lon", 103.95);
+                $this->set("zoom", 6);
+                break;
+
+            default:
+                break;
+        }
+        $this->render("index");
+    }
+
 }

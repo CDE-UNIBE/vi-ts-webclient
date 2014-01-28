@@ -66,7 +66,10 @@ var mapOnClick = function(event){
 }
 
 var map = L.map('map')
-if(typeof mlat != 'undefined' && typeof mlon != 'undefined'){
+if(typeof lat != 'undefined' && typeof lon != 'undefined' && typeof zoom != 'undefined'){
+    map.setView([lat, lon], zoom);
+}
+else if(typeof mlat != 'undefined' && typeof mlon != 'undefined'){
     map.setView([mlat, mlon], 10);
 } else {
     map.setView([0, 0], 2);

@@ -8,6 +8,10 @@ if (isset($mlat) && isset($mlon)) {
     $script = "var mlat = $mlat, mlon = $mlon;";
     echo $this->Html->scriptBlock($script, array('inline' => false));
 }
+if (isset($lat) && isset($lon) && isset($zoom)) {
+    $script = "var lat = $lat, lon = $lon, zoom = $zoom;";
+    echo $this->Html->scriptBlock($script, array('inline' => false));
+}
 ?>
 
 <div class="row">

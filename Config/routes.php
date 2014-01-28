@@ -31,7 +31,6 @@ Router::connect('/', array('controller' => 'pages',
 /**
  * ...and connect the rest of 'Pages' controller's URLs.
  */
-
 Router::connect('/about', array('controller' => 'pages',
             'action' => 'display',
             'about'));
@@ -46,6 +45,26 @@ Router::connect('/contact', array('controller' => 'pages',
             'action' => 'display',
             'contact'));
 
+// Add direct links to pilot countries
+Router::connect('/switzerland', array('controller' => 'pages',
+            'action' => 'country', "switzerland"));
+
+Router::connect('/liberia', array('controller' => 'pages',
+            'action' => 'country', "liberia"));
+
+Router::connect('/laos', array('controller' => 'pages',
+            'action' => 'country', "laos"));
+
+Router::connect('/tanzania', array('controller' => 'pages',
+            'action' => 'country', "tanzania"));
+
+Router::connect('/kenya', array('controller' => 'pages',
+            'action' => 'country', "kenya"));
+
+Router::connect('/ethiopia', array('controller' => 'pages',
+            'action' => 'country', "ethiopia"));
+
+// Add a route to get the Geohash shortcuts URL
 Router::connect('/:location', array('controller' => 'pages',
             'action' => 'location'),
                 array('location' => '[a-z0-9]+'));

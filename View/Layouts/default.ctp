@@ -18,7 +18,8 @@
 
     <!-- Bootstrap core CSS -->
     <?php
-    echo $this->Html->css("bootstrap-3.0.3/bootstrap.css");
+    echo $this->Html->css("bootstrap-3.0.3/bootstrap.min.css");
+    echo $this->Html->css("font-awesome-4.0.3/font-awesome.min.css");
     ?>
     <!-- Custom styles for this template -->
     <!--<link href="navbar-static-top.css" rel="stylesheet">-->

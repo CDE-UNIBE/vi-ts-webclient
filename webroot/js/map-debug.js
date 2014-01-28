@@ -16,9 +16,11 @@ var setLocation = function(lon, lat){
     }
 
     var innerHtml = "<div class=\"panel-heading\">Data are being processed ...</div><div style=\"text-align: center;\"><img width=\"200\" height=\"200\" src=\"img/spinner.gif\" alt=\"Loading ...\"></img></div>"
-    $("#raw-values-preview-div").html(innerHtml);
-    
-    $("#raw-values-preview-div").fadeIn();
+    var previewDiv = $("#raw-values-preview-div");
+    previewDiv.html(innerHtml);
+    previewDiv.parents(".row").removeClass("hidden");
+    $(".bfast-button-row").removeClass("hidden");
+
     // Update also the input fields
     $("#longitude-input").val(Math.round(lon*10000)/10000);
     $("#latitude-input").val(Math.round(lat*10000)/10000);
@@ -38,42 +40,22 @@ var setLocation = function(lon, lat){
 //RawDataOutput=timeseries@mimeType=application/json*/
 
     $.ajax({
-        url: "/cgi-bin/zoo_loader.cgi?RawDataOutput=timeseries@mimeType=application/json",
+        url: "/cgi-bin/zoo_loader.cgi?RawDataOutput=plot@mimeType=application/json",
         data: {
             "ServiceProvider": "",
             "metapath": "",
             Service: "WPS",
             Request: "Execute",
             Version: "1.0.0",
-            Identifier: "ModisTimeSeries",
+            Identifier: "TimeSeries",
             DataInputs: "lon=" + lon + ";lat=" + lat + ";epsg=4326;width=800;height=300"
         },
         success: function(data, textStatus, jqXHR){
-            var innerHtml = "<div class=\"panel-heading\">Time Series</div><div><img width=\"100%\" src=\"" + data['file'] + "\" alt=\"WPS Result\"></img></div>"
+            var innerHtml = "<div class=\"panel-heading\">Time Series<a href=\"#\"><i class=\"pull-right fa fa-info-circle\">&nbsp;</i></a></div><div><img width=\"100%\" src=\"" + data['file'] + "\" alt=\"WPS Result\"></img></div>"
             $("#raw-values-preview-div").html(innerHtml);
+            
         }
     });
-
-/*
-    var innerHtml = "<div class=\"panel-heading\">Raw Values</div><div><img width=\"100%\" src=\"/cgi-bin/zoo_loader.cgi?ServiceProvider=&metapath=&Service=WPS&Request=Execute&Version=1.0.0&Identifier=ModisTimeSeries&DataInputs=lon=" + lon + ";lat=" + lat + ";epsg=4326;width=800;height=300&RawDataOutput=timeseries@mimeType=image/png\" alt=\"WPS Result\"></img></div>"
-    //$("#latlng-alert-header").html(header);
-    //$("#latlng-alert").modal();
-    $("#raw-values-preview-div").html(innerHtml);
-    $("#raw-values-preview-div").fadeIn();
-    // Update also the input fields
-    $("#longitude-input").val(lon);
-    $("#latitude-input").val(lat);
-    marker = L.marker(L.latLng(lat, lon));
-    marker.on('click', function(e){
-        map.removeLayer(marker);
-        $("#raw-values-preview-div").html("");
-        $("#raw-values-preview-div").fadeOut();
-        $("#longitude-input").val("");
-        $("#latitude-input").val("");
-        marker = undefined;
-    });
-    marker.addTo(map);
-    */
 }
 
 var mapOnClick = function(event){
@@ -232,6 +214,33 @@ $("#location-input-button").click(function(e){
     setLocation(lon, lat);
     map.panTo(L.latLng(lat, lon), {
         animate: true
+    });
+});
+
+$("#bfast-button").click(function(e){
+    var innerHtml = "<div class=\"panel-heading\">Data are being processed ...</div><div style=\"text-align: center;\"><img width=\"200\" height=\"200\" src=\"img/spinner.gif\" alt=\"Loading ...\"></img></div>"
+    var bfastContainer = $("#bfast-diagram-panel");
+    bfastContainer.html(innerHtml);
+    bfastContainer.parents(".row").removeClass("hidden");
+
+    var latLng = marker.getLatLng();
+
+    $.ajax({
+        url: "/cgi-bin/zoo_loader.cgi?RawDataOutput=plot@mimeType=application/json",
+        data: {
+            "ServiceProvider": "",
+            "metapath": "",
+            Service: "WPS",
+            Request: "Execute",
+            Version: "1.0.0",
+            Identifier: "NDVIBfast",
+            DataInputs: "lon=" + latLng.lng + ";lat=" + latLng.lat + ";epsg=4326;width=800;height=300"
+        },
+        success: function(data, textStatus, jqXHR){
+            var innerHtml = "<div class=\"panel-heading\">Breaks for Additive Season and Trend<a href=\"#\"><i class=\"pull-right fa fa-info-circle\">&nbsp;</i></a></div><div><img width=\"100%\" src=\"" + data['file'] + "\" alt=\"WPS Result\"></img></div>"
+            bfastContainer.html(innerHtml);
+
+        }
     });
 });
 

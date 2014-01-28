@@ -13,6 +13,7 @@ var showAlert = function(msg){
 var setLocation = function(lon, lat){
     if(map.hasLayer(marker)){
         map.removeLayer(marker);
+        $(".hidden-at-start").addClass("hidden");
     }
 
     var innerHtml = "<div class=\"panel-heading\">Data are being processed ...</div><div style=\"text-align: center;\"><img width=\"200\" height=\"200\" src=\"img/spinner.gif\" alt=\"Loading ...\"></img></div>"

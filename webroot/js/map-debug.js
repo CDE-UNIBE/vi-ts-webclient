@@ -113,7 +113,6 @@ function getSeries(lon, lat) {
 function setLocation(lon, lat){
     if(map.hasLayer(marker)){
         map.removeLayer(marker);
-        $(".hidden-at-start").addClass("hidden");
     }
 
     // Update also the input fields
@@ -262,10 +261,15 @@ map.on('click', mapOnClick);
 $("#location-input-button").click(function(e){
     var lon = $("#longitude-input").val();
     var lat = $("#latitude-input").val();
-    getSeries(lon, lat);
-    map.panTo(L.latLng(lat, lon), {
-        animate: true
-    });
+    if(lat != '' && lon != ''){
+        getSeries(lon, lat);
+        map.panTo(L.latLng(lat, lon), {
+            animate: true
+        });
+    } else {
+        showAlert("Add first a location! Click the map to set the location or input coordinates in the form below the map.");
+    }
+    
 });
 
 /* (C) 2009 Ivan Boldyrev <lispnik@gmail.com>

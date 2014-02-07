@@ -2,7 +2,7 @@ $(".alert").alert()
 
 var marker;
 
-var showAlert = function(msg){
+function showAlert(msg){
     var html = "<div id=\"alert-div\" class=\"alert alert-warning alert-dismissable\">";
     html += "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">&times;</button>";
     html += msg;
@@ -10,35 +10,34 @@ var showAlert = function(msg){
     $(html).insertBefore("#map");
 }
 
-var setLocation = function(lon, lat){
-    if(map.hasLayer(marker)){
-        map.removeLayer(marker);
-        $(".hidden-at-start").addClass("hidden");
+/**
+ *
+ */
+function toggleImageWrapper(){
+    var h = $(this).parent().next(".image-wrapper");
+    if(h.hasClass("hidden")){
+        h.removeClass("hidden");
+    } else {
+        h.addClass("hidden");
+    }
+}
+
+/**
+ *
+ */
+function getSeries(lon, lat) {
+    if(!map.hasLayer(marker)){
+        setLocation(lon, lat);
+        map.panTo([lat, lon]);
     }
 
-    var innerHtml = "<div class=\"panel-heading\">Data are being processed ...</div><div style=\"text-align: center;\"><img width=\"200\" height=\"200\" src=\"img/spinner.gif\" alt=\"Loading ...\"></img></div>"
-    var previewDiv = $("#raw-values-preview-div");
-    previewDiv.html(innerHtml);
-    previewDiv.parents(".row").removeClass("hidden");
-    $(".bfast-button-row").removeClass("hidden");
+    var plus = $("<a href=\"#\"><i class=\"fa fa-plus-circle fa-lg pull-right\"></i></a>");
+    var minus = $("<a href=\"#\"><i class=\"fa fa-minus-circle fa-lg pull-right\"></i></a>");
 
-    // Update also the input fields
-    $("#longitude-input").val(Math.round(lon*10000)/10000);
-    $("#latitude-input").val(Math.round(lat*10000)/10000);
-    marker = L.marker(L.latLng(lat, lon));
-    marker.on('click', function(e){
-        map.removeLayer(marker);
-        $("#raw-values-preview-div").html("");
-        $("#raw-values-preview-div").fadeOut();
-        $("#longitude-input").val("");
-        $("#latitude-input").val("");
-        marker = undefined;
-    });
-    marker.addTo(map);
-
-    /*http://localhost/cgi-bin/zoo_loader.cgi?ServiceProvider=&metapath=&Service=WPS&Request=Execute&Version=1.0.0&
-//Identifier=ModisTimeSeries&DataInputs=lon=-11.1676025390625;lat=6.980954426458497;epsg=4326;width=800;height=300&
-//RawDataOutput=timeseries@mimeType=application/json*/
+    var spin = "<i class=\"fa fa-cog fa-spin pull-right fa-lg\"></i>";
+    $(".image-wrapper").detach();
+    $(".panel-heading > a, i").detach();
+    $(".panel-heading").append(spin);
 
     $.ajax({
         url: "/cgi-bin/zoo_loader.cgi?RawDataOutput=plot@mimeType=application/json",
@@ -52,11 +51,82 @@ var setLocation = function(lon, lat){
             DataInputs: "lon=" + lon + ";lat=" + lat + ";epsg=4326;width=800;height=300"
         },
         success: function(data, textStatus, jqXHR){
-            var innerHtml = "<div class=\"panel-heading\">Time Series<a href=\"#\"><i class=\"pull-right fa fa-info-circle\">&nbsp;</i></a></div><div><img width=\"100%\" src=\"" + data['file'] + "\" alt=\"WPS Result\"></img></div>"
-            $("#raw-values-preview-div").html(innerHtml);
-            
+            var p = plus.clone();
+            var m = minus.clone();
+            p.click(toggleImageWrapper);
+            p.click(function(){
+                $(this).parent().append(m);
+                $(this).detach();
+
+            });
+            m.click(toggleImageWrapper);
+            m.click(function(){
+                $(this).parent().append(p);
+                $(this).detach();
+            });
+            var panel = $("#raw-values-panel");
+            var heading = panel.find(".panel-heading");
+            heading.find(".fa-cog").detach();
+            heading.append(p);
+            var imageWrapper = "<div class=\"hidden image-wrapper\"><img width=\"100%\" src=\"" + data['file'] + "\" alt=\"WPS Result\"></img></div>";
+            panel.append(imageWrapper);
         }
     });
+
+    $.ajax({
+        url: "/cgi-bin/zoo_loader.cgi?RawDataOutput=plot@mimeType=application/json",
+        data: {
+            "ServiceProvider": "",
+            "metapath": "",
+            Service: "WPS",
+            Request: "Execute",
+            Version: "1.0.0",
+            Identifier: "NDVIBfast",
+            DataInputs: "lon=" + lon + ";lat=" + lat + ";epsg=4326;width=800;height=300"
+        },
+        success: function(data, textStatus, jqXHR){
+            var p = plus.clone();
+            var m = minus.clone();
+            p.click(toggleImageWrapper);
+            p.click(function(){
+                $(this).parent().append(m);
+                $(this).detach();
+
+            });
+            m.click(toggleImageWrapper);
+            m.click(function(){
+                $(this).parent().append(p);
+                $(this).detach();
+            });
+            var panel = $("#bfast-diagram-panel");
+            var heading = panel.find(".panel-heading");
+            heading.find(".fa-cog").detach();
+            heading.append(p);
+            var imageWrapper = "<div class=\"hidden image-wrapper\"><img width=\"100%\" src=\"" + data['file'] + "\" alt=\"WPS Result\"></img></div>";
+            panel.append(imageWrapper);
+
+        }
+    });
+
+}
+
+function setLocation(lon, lat){
+    if(map.hasLayer(marker)){
+        map.removeLayer(marker);
+        $(".hidden-at-start").addClass("hidden");
+    }
+
+    // Update also the input fields
+    $("#longitude-input").val(Math.round(lon*10000)/10000);
+    $("#latitude-input").val(Math.round(lat*10000)/10000);
+    marker = L.marker(L.latLng(lat, lon));
+    marker.on('click', function(e){
+        map.removeLayer(marker);
+        $(".image-wrapper").detach();
+        $(".panel-heading > a, i").detach();
+        marker = undefined;
+    });
+    marker.addTo(map);
 }
 
 var mapOnClick = function(event){
@@ -175,9 +245,7 @@ var ShareControl = L.Control.extend({
 
 map.addControl(new ShareControl());
 
-L.control.layers({
-    "Base Layer": baselayer
-},{
+L.control.layers({},{
     "Global landcover": globcover_2009,
     "Available countries": modis_tiles,
     "Requested locations": heatmap
@@ -191,63 +259,14 @@ if(typeof mlat != 'undefined' && typeof mlon != 'undefined'){
 
 map.on('click', mapOnClick);
 
-$("#add-diagram-button").on("click", function(e){
-
-    var innerpanel = "<div id=\"preview-div\" class=\"panel panel-default\">"
-
-    var lon = marker.getLatLng().lng;
-    var lat = marker.getLatLng().lat;
-
-    innerpanel += "<div class=\"panel-heading\">Raw Values</div><div><img width=\"100%\" src=\"/cgi-bin/zoo_loader.cgi?ServiceProvider=&metapath=&Service=WPS&Request=Execute&Version=1.0.0&Identifier=ModisTimeSeries&DataInputs=lon=" + lon + ";lat=" + lat + ";epsg=4326;width=800;height=300&RawDataOutput=timeseries@mimeType=image/png\" alt=\"WPS Result\"></img></div>";
-
-    innerpanel += "<button type=\"button\" class=\"btn btn-default\" style=\"margin: 5px;\">Close</button></div>";
-
-    $("#diagram-preview-container").append(innerpanel);
-
-    $("#diagram-preview-container div button").click(function(e){
-        var div = $(this).parent();
-        div.fadeOut(400, function(){
-            div.remove();
-        });
-    });
-});
-
 $("#location-input-button").click(function(e){
     var lon = $("#longitude-input").val();
     var lat = $("#latitude-input").val();
-    setLocation(lon, lat);
+    getSeries(lon, lat);
     map.panTo(L.latLng(lat, lon), {
         animate: true
     });
 });
-
-$("#bfast-button").click(function(e){
-    var innerHtml = "<div class=\"panel-heading\">Data are being processed ...</div><div style=\"text-align: center;\"><img width=\"200\" height=\"200\" src=\"img/spinner.gif\" alt=\"Loading ...\"></img></div>"
-    var bfastContainer = $("#bfast-diagram-panel");
-    bfastContainer.html(innerHtml);
-    bfastContainer.parents(".row").removeClass("hidden");
-
-    var latLng = marker.getLatLng();
-
-    $.ajax({
-        url: "/cgi-bin/zoo_loader.cgi?RawDataOutput=plot@mimeType=application/json",
-        data: {
-            "ServiceProvider": "",
-            "metapath": "",
-            Service: "WPS",
-            Request: "Execute",
-            Version: "1.0.0",
-            Identifier: "NDVIBfast",
-            DataInputs: "lon=" + latLng.lng + ";lat=" + latLng.lat + ";epsg=4326;width=800;height=300"
-        },
-        success: function(data, textStatus, jqXHR){
-            var innerHtml = "<div class=\"panel-heading\">Breaks for Additive Season and Trend<a href=\"#\"><i class=\"pull-right fa fa-info-circle\">&nbsp;</i></a></div><div><img width=\"100%\" src=\"" + data['file'] + "\" alt=\"WPS Result\"></img></div>"
-            bfastContainer.html(innerHtml);
-
-        }
-    });
-});
-
 
 /* (C) 2009 Ivan Boldyrev <lispnik@gmail.com>
  *

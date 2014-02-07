@@ -33,31 +33,27 @@ if (isset($lat) && isset($lon) && isset($zoom)) {
                 <label class="sr-only" for="latitude-input">Latitude</label>
                 <input type="number" class="form-control" id="latitude-input" placeholder="Latitude">
             </div>
-            <button type="button" id="location-input-button" class="btn btn-default">Set location</button>
+            <button type="button" id="location-input-button" class="btn btn-primary">Get time series</button>
             <!--button type="button" id="permalink-input-button" class="btn btn-default">Permanent link</button-->
         </form>
     </div>
 </div>
 
-<div class="row hidden hidden-at-start">
+<div class="row">
     <div class="col-md-10 col-md-offset-1">
         <div id="diagram-preview-container">
-            <div id="raw-values-preview-div" class="panel panel-default">
+            <div id="raw-values-panel" class="panel panel-default">
+                <div class="panel-heading">Raw time series</div>
             </div>
         </div>
     </div>
 </div>
 
-<div class="row hidden hidden-at-start bfast-button-row">
-    <div class="col-md-10 col-md-offset-1">
-        <button type="button" id="bfast-button" class="btn btn-default"><i class="fa fa-bar-chart-o"></i>&nbsp;Get Breaks for Additive Season and Trend</button>
-    </div>
-</div>
-
-<div class="row hidden hidden-at-start">
+<div class="row">
     <div class="col-md-10 col-md-offset-1">
         <div id="bfast-diagram-container">
             <div id="bfast-diagram-panel" class="panel panel-default">
+                <div class="panel-heading">Breaks for Additive Season and Trend</div>
             </div>
         </div>
     </div>

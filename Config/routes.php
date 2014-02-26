@@ -41,9 +41,9 @@ Router::connect('/MODIS/processed/*', array('controller' => 'directories',
 Router::connect('/MODIS/MOLT/*', array('controller' => 'directories',
             'action' => 'molt'));
 
-Router::connect('/contact', array('controller' => 'pages',
+Router::connect('/references', array('controller' => 'pages',
             'action' => 'display',
-            'contact'));
+            'references'));
 
 // Add direct links to pilot countries
 Router::connect('/switzerland', array('controller' => 'pages',

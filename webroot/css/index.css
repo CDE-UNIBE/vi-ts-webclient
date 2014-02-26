@@ -1,3 +1,21 @@
+div#map {
+    height: 300px; margin-bottom: 20px; margin-top: 20px;
+}
+
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+    div#map {
+        height: 400px;
+    }
+}
+
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+    div#map {
+        height: 600px;
+    }
+}
+
 .get-location-control {
     background: none repeat scroll 0 0 #F8F8F9;
     border-radius: 5px;

@@ -1,0 +1,5 @@
+/* Indicate links that link to an external page */
+a.external {
+    background: url("../img/external-link-ltr-icon.png") no-repeat scroll right center transparent;
+    padding:0 13px 0 0;
+}

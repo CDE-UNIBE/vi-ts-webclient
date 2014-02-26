@@ -1,7 +1,12 @@
 <?php
 echo $this->Html->meta("viewport", "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no");
 echo $this->Html->script("leaflet-0.6.4/leaflet.js", array('inline' => false));
-echo $this->Html->css(array("leaflet-0.6.4/leaflet", "index.min"), array('inline' => false));
+$date = date_create();
+if (Configure::read("debug") == 0) {
+    echo $this->Html->css(array("leaflet-0.6.4/leaflet", "index.min"), array('inline' => false));
+} else {
+    echo $this->Html->css(array("leaflet-0.6.4/leaflet", "index"), array('inline' => false));
+}
 
 if (isset($mlat) && isset($mlon)) {
     $script = "var mlat = $mlat, mlon = $mlon;";
@@ -74,8 +79,8 @@ if (isset($lat) && isset($lon) && isset($zoom)) {
 <?php
             $date = date_create();
             if (Configure::read("debug") == 0) {
-                echo $this->Html->script("map.js?_dc=" . date_timestamp_get($date));
+                echo $this->Html->script("map.min.js");
             } else {
-                echo $this->Html->script("map-debug.js?_dc=" . date_timestamp_get($date));
+                echo $this->Html->script("map.js?_dc=" . date_timestamp_get($date));
             }
 ?>

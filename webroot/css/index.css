@@ -22,13 +22,18 @@ div#map {
     box-shadow: 0 1px 7px rgba(0, 0, 0, 0.4);
 }
 
-.get-location-control a {
+.get-location {
     background-image: url("../img/get-location_26.png");
-    height: 36px !important;
-    width: 36px !important;
+    height: 36px;
+    width: 36px;
     background-position: 50% 50%;
     background-repeat: no-repeat;
     display: block;
+}
+
+.leaflet-touch .get-location {
+    width: 44px;
+    height: 44px;
 }
 
 .share-control {
@@ -37,13 +42,18 @@ div#map {
     box-shadow: 0 1px 7px rgba(0, 0, 0, 0.4);
 }
 
-.share-control a {
+.share {
     background-image: url("../img/icon_15026_26.png");
-    height: 36px !important;
-    width: 36px !important;
+    height: 36px;
+    width: 36px;
     background-position: 50% 50%;
     background-repeat: no-repeat;
     display: block;
+}
+
+.leaflet-touch .share {
+    width: 44px;
+    height: 44px;
 }
 
 .bfast-button-row {

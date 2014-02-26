@@ -1,5 +1,4 @@
-
-<!DOCTYPE html>
+<?php echo $this->Html->docType("xhtml-strict"); ?>
 <html lang="en">
     <head>
         <meta charset="utf-8">

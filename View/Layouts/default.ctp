@@ -2,11 +2,13 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <?php /*<meta http-equiv="X-UA-Compatible" content="IE=edge">*/ ?>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="">
         <meta name="author" content="">
         <?php
+        // See also: http://www.joshuawinn.com/fix-html5-validator-error-bad-value-x-ua-compatible-for-attribute-http-equiv-on-element-meta/
+        $this->response->header('X-UA-Compatible', 'IE=edge,chrome=1');
         echo $this->Html->meta('icon');
         echo $this->fetch('css');
         echo $this->fetch('script');

@@ -128,9 +128,6 @@ if (Configure::read("debug") == 0) {
         </a>
     </div>
 </div>
-
-<a href="#" class="external">link</a>
-
 <?php
 $date = date_create();
 if (Configure::read("debug") == 0) {

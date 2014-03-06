@@ -1,0 +1,11 @@
+.start-citation {
+    margin-top: 10px;
+}
+
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+    .start-citation {
+        margin-top: 15px;
+    }
+}
+

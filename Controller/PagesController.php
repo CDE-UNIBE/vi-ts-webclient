@@ -94,6 +94,15 @@ class PagesController extends AppController {
         $this->render('index');
     }
 
+    public function redirecturl() {
+        if (isset($this->request->query['u'])) {
+            $externalUrl = $this->request->query['u'];
+            $this->redirect($externalUrl, 303, true);
+        } else {
+            $this->redirect(array('controller' => 'pages', 'action' => 'display', 'index'));
+        }
+    }
+
     public function country($id) {
 
         switch ($id) {

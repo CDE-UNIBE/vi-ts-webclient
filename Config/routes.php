@@ -45,6 +45,9 @@ Router::connect('/references', array('controller' => 'pages',
             'action' => 'display',
             'references'));
 
+Router::connect('/redirect', array('controller' => 'pages',
+            'action' => 'redirecturl'));
+
 // Add direct links to pilot countries
 Router::connect('/switzerland', array('controller' => 'pages',
             'action' => 'country', "switzerland"));

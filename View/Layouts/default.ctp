@@ -1,4 +1,4 @@
-<?php echo $this->Html->docType("xhtml-strict"); ?>
+<?php echo $this->Html->docType("html5"); ?>
 <html lang="en">
     <head>
         <meta charset="utf-8">

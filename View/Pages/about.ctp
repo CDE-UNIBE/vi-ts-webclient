@@ -80,7 +80,7 @@
             <li>Spatial Resolution 250m</li>
             <li>Archived data since February 2000</li>
             <li>16-days Maximum Value Composites (MVC)</li>
-            <li>23 imager per year</li>
+            <li>23 images per year</li>
         </ul>
         <p>For more detailed information please consider the following two publications:</p>
         <ul>

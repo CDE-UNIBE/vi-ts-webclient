@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <?php /*<meta http-equiv="X-UA-Compatible" content="IE=edge">*/ ?>
+        <?php /* <meta http-equiv="X-UA-Compatible" content="IE=edge"> */ ?>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="">
         <meta name="author" content="">
@@ -65,30 +65,43 @@
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li <?php if ($title_for_layout == "index") {
+                        <li <?php
+                        if ($title_for_layout == "index") {
                             echo "class=\"active\"";
-                        } ?>><a href="<?php echo $this->Html->url(array("controller" => "pages", "action" => "display", "index")); ?>">Home</a></li>
-                        <li <?php if ($title_for_layout == "about") {
-                            echo "class=\"active\"";
-                        } ?>><a href="<?php echo $this->Html->url(array("controller" => "pages", "action" => "display", "about")); ?>">About</a></li>
-                        <li <?php if ($title_for_layout == "references") {
-                            echo "class=\"active\"";
-                        } ?>><a href="<?php echo $this->Html->url(array("controller" => "pages", "action" => "display", "references")); ?>">References</a></li>
+                        }
+                        ?>><a href="<?php echo $this->Html->url(array("controller" => "pages", "action" => "display", "index")); ?>">Home</a></li>
+                        <li <?php
+                            if ($title_for_layout == "about") {
+                                echo "class=\"active\"";
+                            } ?>><a href="<?php echo $this->Html->url(array("controller" => "pages", "action" => "display", "about")); ?>">About</a></li>
+                        <li <?php
+                            if ($title_for_layout == "contact") {
+                                echo "class=\"active\"";
+                            }
+                        ?>><a href="<?php echo $this->Html->url(array("controller" => "pages", "action" => "display", "contact")); ?>">Contact</a></li>
+                        <li <?php
+                            if ($title_for_layout == "references") {
+                                echo "class=\"active\"";
+                            }
+                        ?>><a href="<?php echo $this->Html->url(array("controller" => "pages", "action" => "display", "references")); ?>">References</a></li>
                     </ul>
                 </div><!--/.nav-collapse -->
             </div>
         </div>
+        <?php
+                            echo "<div class=\"container\" style=\"margin-top: 20px;\">";
+                            /* <!-- Main component for a primary marketing message or call to action --> */
+                            echo $this->fetch('content');
+                            echo "</div><!-- /container -->";
 
 
-        <div class="container" style="margin-top: 20px;">
-            <!-- Main component for a primary marketing message or call to action -->
-<?php echo $this->fetch('content'); ?>
-        </div><!-- /container -->
-
-
-        <!-- Bootstrap core JavaScript
-        ================================================== -->
-        <!-- Placed at the end of the document so the pages load faster -->
+                            $date = date_create();
+                            if (Configure::read("debug") == 0) {
+                                echo $this->Html->script("default-layout.min");
+                            } else {
+                                echo $this->Html->script("default-layout.js?_dc=" . date_timestamp_get($date));
+                            }
+        ?>
 
     </body>
 </html>

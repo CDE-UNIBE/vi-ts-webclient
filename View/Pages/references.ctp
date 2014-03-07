@@ -9,11 +9,11 @@ if (Configure::read("debug") == 0) {
 
 <div class="row">
     <div class="col-md-10">
-        <h1>References</h1>
+        <h2>References</h2>
     </div>
 </div>
 
-<div class="row start-citation">
+<div class="row">
     <div class="col-md-10">
         Beck, P., Atzberer, C., Høgda, K., Johansen, B., & Skidmore, A. (2006).
         Improved monitoring of vegetation dynamics at very high latitudes:
@@ -128,11 +128,3 @@ if (Configure::read("debug") == 0) {
         </a>
     </div>
 </div>
-<?php
-$date = date_create();
-if (Configure::read("debug") == 0) {
-    echo $this->Html->script("references.min");
-} else {
-    echo $this->Html->script("references.js?_dc=" . date_timestamp_get($date));
-}
-?>

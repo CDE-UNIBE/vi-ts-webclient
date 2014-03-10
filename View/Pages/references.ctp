@@ -93,11 +93,13 @@ if (Configure::read("debug") == 0) {
         University of Arizona. Arizona.
     </div>
 </div>
-<!--div class="row doi-link">
+<div class="row doi-link">
     <div class="col-md-10">
-
+        <a href="http://vip.arizona.edu/documents/MODIS/MODIS_VI_UsersGuide_01_2012.pdf" class="external">
+            http://vip.arizona.edu/documents/MODIS/MODIS_VI_UsersGuide_01_2012.pdf
+        </a>
     </div>
-</div-->
+</div>
 
 <div class="row start-citation">
     <div class="col-md-10">

@@ -103,6 +103,25 @@ class PagesController extends AppController {
         }
     }
 
+    public function multi() {
+        $content = "";
+        $listEncodedCoords = array();
+        if (count($this->request->data) > 0) {
+            $content = $this->request->data['csv'];
+            $lines = explode("\n", $content);
+            $geohash = new Geohash();
+            foreach ($lines as $line) {
+                $comps = explode(";", $line);
+                $lat = $comps[1];
+                $lng = $comps[2];
+                $encodedCoords = $geohash->encode($lat, $lng);
+                array_push($listEncodedCoords, $encodedCoords);
+            }
+        }
+        $this->set("content", $content);
+        $this->set("coords", $listEncodedCoords);
+    }
+
     public function country($id) {
 
         switch ($id) {

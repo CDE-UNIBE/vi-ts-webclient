@@ -35,6 +35,9 @@ Router::connect('/about', array('controller' => 'pages',
             'action' => 'display',
             'about'));
 
+Router::connect('/multi', array('controller' => 'pages',
+            'action' => 'multi'));
+
 Router::connect('/contact', array('controller' => 'pages',
             'action' => 'display',
             'contact'));

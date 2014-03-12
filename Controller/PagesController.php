@@ -112,14 +112,14 @@ class PagesController extends AppController {
             $geohash = new Geohash();
             foreach ($lines as $line) {
                 $comps = explode(";", $line);
-                $lat = $comps[1];
-                $lng = $comps[2];
-                $encodedCoords = $geohash->encode($lat, $lng);
-                array_push($listEncodedCoords, $encodedCoords);
+                if (count($comps) >= 3) {
+                    $encodedCoords = $geohash->encode($comps[1], $comps[2]);
+                    array_push($listEncodedCoords, array('name' => $comps[0], 'coords' => $encodedCoords));
+                }
             }
         }
         $this->set("content", $content);
-        $this->set("coords", $listEncodedCoords);
+        $this->set("list", $listEncodedCoords);
     }
 
     public function country($id) {

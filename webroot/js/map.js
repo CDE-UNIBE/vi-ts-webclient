@@ -103,7 +103,6 @@ function getSeries(lon, lat) {
             heading.find(".fa-cog").detach();
             heading.append(p);
             var imageWrapper = "<div class=\"hidden image-wrapper\"><img width=\"100%\" src=\"" + data['file'] + "\" alt=\"WPS Result\"></img></div>";
-            console.log(imageWrapper);
             panel.append(imageWrapper);
 
         }

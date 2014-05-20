@@ -47,7 +47,7 @@ function getSeries(lon, lat) {
             Service: "WPS",
             Request: "Execute",
             Version: "1.0.0",
-            Identifier: "TimeSeries",
+            Identifier: "PlotNdviRawTimeSeries",
             DataInputs: "lon=" + lon + ";lat=" + lat + ";epsg=4326;width=800;height=300"
         },
         success: function(data, textStatus, jqXHR){
@@ -72,6 +72,42 @@ function getSeries(lon, lat) {
             panel.append(imageWrapper);
         }
     });
+    
+    $.ajax({
+        url: "/cgi-bin/zoo_loader.cgi?RawDataOutput=plot@mimeType=application/json",
+        data: {
+            "ServiceProvider": "",
+            "metapath": "",
+            Service: "WPS",
+            Request: "Execute",
+            Version: "1.0.0",
+            Identifier: "PlotNdviFittingFunctionTimeSeries",
+            DataInputs: "lon=" + lon + ";lat=" + lat + ";epsg=4326;width=1024;height=512"
+        },
+        success: function(data, textStatus, jqXHR){
+            var p = plus.clone();
+            var m = minus.clone();
+            p.click(toggleImageWrapper);
+            p.click(function(){
+                $(this).parent().append(m);
+                $(this).detach();
+
+            });
+            m.click(toggleImageWrapper);
+            m.click(function(){
+                $(this).parent().append(p);
+                $(this).detach();
+            });
+            var panel = $("#fitting-diagram-panel");
+            var heading = panel.find(".panel-heading");
+            heading.find(".fa-cog").detach();
+            heading.append(p);
+            var imageWrapper = "<div class=\"hidden image-wrapper\"><img width=\"100%\" src=\"" + data['file'] + "\" alt=\"WPS Result\"></img></div>";
+            console.log(imageWrapper);
+            panel.append(imageWrapper);
+
+        }
+    });
 
     $.ajax({
         url: "/cgi-bin/zoo_loader.cgi?RawDataOutput=plot@mimeType=application/json",
@@ -81,7 +117,7 @@ function getSeries(lon, lat) {
             Service: "WPS",
             Request: "Execute",
             Version: "1.0.0",
-            Identifier: "NDVIBfast",
+            Identifier: "PlotNdviBfastTimeSeries",
             DataInputs: "lon=" + lon + ";lat=" + lat + ";epsg=4326;width=800;height=300"
         },
         success: function(data, textStatus, jqXHR){

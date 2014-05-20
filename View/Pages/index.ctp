@@ -68,6 +68,16 @@ if (isset($lat) && isset($lon) && isset($zoom)) {
 
 <div class="row">
     <div class="col-md-10">
+        <div id="fitting-diagram-container">
+            <div id="fitting-diagram-panel" class="panel panel-default">
+                <div class="panel-heading">Fitting function</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-10">
         <div id="bfast-diagram-container">
             <div id="bfast-diagram-panel" class="panel panel-default">
                 <div class="panel-heading">Breaks for Additive Season and Trend</div>

@@ -202,6 +202,12 @@ var heatmap = L.tileLayer('http://www.vi-ts.org/tms/1.0.0/access_heatmap/{z}/{x}
     maxZoom: 17
 });
 
+var modis_color = L.tileLayer('http://www.vi-ts.org/tms/1.0.0/modis_color/{z}/{x}/{y}.png', {
+    tms: true,
+    maxZoom: 17
+});
+
+
 var GetCurrentLocationControl = L.Control.extend({
     options: {
         position: 'topright'
@@ -282,7 +288,8 @@ map.addControl(new ShareControl());
 L.control.layers({},{
     "Global landcover": globcover_2009,
     "Available countries": modis_tiles,
-    "Requested locations": heatmap
+    "Requested locations": heatmap,
+    "MODIS colored": modis_color
 }).addTo(map);
 
 // Check if an inital marker is set. If yes, set the marker and fill in the

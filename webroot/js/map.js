@@ -207,7 +207,7 @@ var modis_color = L.tileLayer('http://www.vi-ts.org/tms/1.0.0/modis_color/{z}/{x
     maxZoom: 17
 });
 
-var modis_trend = L.tileLayer('http://sdi.cde.unibe.ch/geoserver/gwc/service/tms/1.0.0/vi-ts%3Aeth_ndvi_trend@EPSG%3A900913@png/{z}/{x}/{y}.png', {
+var modis_trend = L.tileLayer('http://sdi.cde.unibe.ch/geoserver/gwc/service/tms/1.0.0/vi-ts%3Amodis_ndvi_trend@EPSG%3A900913@png/{z}/{x}/{y}.png', {
 	tms: true,
 	maxZoom: 17
 	});
